@@ -1,4 +1,3 @@
-import os
 from flask import Flask, request, jsonify
 import openai
 from flask_cors import CORS
@@ -6,9 +5,14 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests from your frontend
 
-# Get the OpenAI API key from the environment variable
+# Set your OpenAI API key
 openai.api_key = "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"
 
+
+# Root route to handle the homepage (this will prevent 404 on /)
+@app.route('/')
+def index():
+    return "Welcome to the Chatbot API! Access the /chat endpoint to communicate with the chatbot."
 
 # Define the chat route for handling messages
 @app.route("/chat", methods=["POST"])
