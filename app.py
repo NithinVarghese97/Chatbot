@@ -1,12 +1,14 @@
+import os
 from flask import Flask, request, jsonify
 import openai
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # This will allow cross-origin requests from your frontend
+CORS(app)  # Allow cross-origin requests from your frontend
 
-# Set your OpenAI API key here
+# Get the OpenAI API key from the environment variable
 openai.api_key = "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"
+
 
 # Define the chat route for handling messages
 @app.route("/chat", methods=["POST"])
@@ -30,6 +32,7 @@ def chat():
 
             return jsonify({"reply": bot_reply})
         except Exception as e:
+            print(f"Error: {e}")  # Log the error for debugging
             return jsonify({"reply": "Sorry, there was an error processing your request."}), 500
 
     return jsonify({"reply": "No message provided."}), 400
