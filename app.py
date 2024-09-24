@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests from your frontend
 
 # Set your OpenAI API key
-openai.api_key = "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"
+openai.api_key = ""
 
 
 # Root route to handle the homepage (this will prevent 404 on /)
