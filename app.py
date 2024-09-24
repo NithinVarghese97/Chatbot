@@ -1,13 +1,13 @@
 from flask import Flask, request, jsonify
 import openai
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests from your frontend
 
-# Set your OpenAI API key
+# Set your OpenAI API key from environment variable
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
 
 # Root route to handle the homepage (this will prevent 404 on /)
 @app.route('/')
@@ -31,12 +31,13 @@ def chat():
                 ]
             )
 
-            # Extract the chatbot's response
-            bot_reply = response.choices[0].message['content']
+            # Extract the chatbot's response correctly from the choices
+            bot_reply = response['choices'][0]['message']['content']
 
             return jsonify({"reply": bot_reply})
         except Exception as e:
-            print(f"Error: {e}")  # Log the error for debugging
+            # Print detailed error for debugging
+            print(f"Error: {e}")
             return jsonify({"reply": "Sorry, there was an error processing your request."}), 500
 
     return jsonify({"reply": "No message provided."}), 400
